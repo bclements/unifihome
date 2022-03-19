@@ -50,7 +50,7 @@ class Title(Widget):
         header_table.add_column("title", justify="center", ratio=1)
         header_table.add_column("clock", justify="right", width=8)
         header_table.add_row(
-            "",self.full_title, self.get_clock() if self.clock else ""
+            "", self.full_title, self.get_clock() if self.clock else ""
         )
         header: RenderableType
         header = Panel(header_table, style=self.style) if self.tall else header_table
