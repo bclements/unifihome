@@ -2,6 +2,7 @@ import click
 from pyunifi.controller import Controller
 from textual import events
 from textual.app import App
+
 import constants
 from ui.footer import Footer
 from ui.main import Main
@@ -12,7 +13,9 @@ class UnifiHome(App):
     def __init__(self, *args, credentials, **kwargs):
         self.credentials = credentials
         self.unifi_controller = Controller(
-            "192.168.1.1", self.credentials["username"], self.credentials["password"]
+            self.credentials["host"],
+            self.credentials["username"],
+            self.credentials["password"],
         )
         self.pending_event = None
         super().__init__(*args, **kwargs)
@@ -42,10 +45,11 @@ class UnifiHome(App):
 
 
 @click.command()
+@click.option("--host", required=True)
 @click.option("--username", required=True)
 @click.option("--password", required=True)
-def UnifiHomeStart(username, password):
-    creds = {"username": username, "password": password}
+def UnifiHomeStart(host, username, password):
+    creds = {"host": host, "username": username, "password": password}
     print("Unifi Home is starting")
     UnifiHome.run(
         title=f"Unifi Home v{constants.VERSION}-b{constants.BUILD}",

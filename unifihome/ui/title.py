@@ -1,14 +1,13 @@
 from datetime import datetime
-from logging import getLogger
-from rich.console import Console, ConsoleOptions, RenderableType
+
+from rich.console import RenderableType
 from rich.panel import Panel
-from rich.repr import rich_repr, Result
+from rich.repr import Result
 from rich.style import StyleType
 from rich.table import Table
-from rich.text import TextType
-from textual.widget import Widget
 from textual import events
-from textual.reactive import watch, Reactive
+from textual.reactive import Reactive, watch
+from textual.widget import Widget
 
 
 class Title(Widget):

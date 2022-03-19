@@ -1,10 +1,8 @@
 from __future__ import annotations
 
-from rich.console import RenderableType
-from rich.style import Style
-from rich.text import Text
 import rich.repr
-
+from rich.console import RenderableType
+from rich.text import Text
 from textual import events
 from textual.reactive import Reactive
 from textual.widget import Widget

@@ -1,8 +1,7 @@
+from rich.panel import Panel
 from textual._context import active_app
 from textual.reactive import Reactive
 from textual.widget import Widget
-from rich.panel import Panel
-from rich.table import Table
 
 
 class Main(Widget):
