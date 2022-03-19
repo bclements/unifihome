@@ -147,3 +147,5 @@ dmypy.json
 .history
 .ionide
 textual.log
+
+.idea/
