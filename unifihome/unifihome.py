@@ -10,8 +10,9 @@ from ui.title import Title
 
 
 class UnifiHome(App):
-    def __init__(self, *args, credentials, **kwargs):
+    def __init__(self, *args, credentials, refresh_rate, **kwargs):
         self.credentials = credentials
+        self.refresh_rate = refresh_rate
         self.unifi_controller = Controller(
             self.credentials["host"],
             self.credentials["username"],
@@ -45,18 +46,26 @@ class UnifiHome(App):
 
 
 @click.command()
-@click.option("--host", required=True)
-@click.option("--username", required=True)
-@click.option("--password", required=True)
-def UnifiHomeStart(host, username, password):
-    creds = {"host": host, "username": username, "password": password}
+@click.option("-h", required=True, envvar="UNIFI_HOSTNAME")
+@click.option("-u", required=True, envvar="UNIFI_USERNAME")
+@click.option("-p", required=True, envvar="UNIFI_PASSWORD")
+@click.option(
+    "-r",
+    default=30,
+    required=False,
+    envvar="UNIFI_REFRESH",
+    help="Refresh rate in seconds [Default: 30 seconds]",
+)
+def unifi_home_start(h, u, p, r):
+    credentials = {"host": h, "username": u, "password": p}
     print("Unifi Home is starting")
     UnifiHome.run(
         title=f"Unifi Home v{constants.VERSION}-b{constants.BUILD}",
         log="textual.log",
-        credentials=creds,
+        credentials=credentials,
+        refresh_rate=r,
     )
 
 
 if __name__ == "__main__":
-    UnifiHomeStart()
+    unifi_home_start()
