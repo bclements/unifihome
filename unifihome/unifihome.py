@@ -2,11 +2,16 @@ import click
 from pyunifi.controller import Controller
 from textual import events
 from textual.app import App
+from textual.widgets import ScrollView
 
 import constants
 from ui.footer import Footer
-from ui.main import Main
 from ui.title import Title
+from ui.unifi import UnifiSystemInfo
+
+"""
+Unifi Home Text Console Application
+"""
 
 
 class UnifiHome(App):
@@ -29,20 +34,18 @@ class UnifiHome(App):
 
     async def on_mount(self, event: events.Mount) -> None:
         self.header = Title()
-        self.main = Main()
+        self.body = ScrollView()
         self.footer = Footer()
         await self.view.dock(self.header, edge="top")
         await self.view.dock(self.footer, edge="bottom")
-        await self.view.dock(self.main, name="main")
+        await self.view.dock(self.body, name="main")
 
-    def show_info(self) -> None:
-        self.main.get_sys_info()
+    async def action_get_system_info(self) -> None:
+        self.unifisysteminfoarea = UnifiSystemInfo()
+        await self.body.update(self.unifisysteminfoarea)
 
-    def action_get_system_info(self) -> None:
-        self.show_info()
-
-    def action_clear(self) -> None:
-        self.main.clear()
+    async def action_clear(self) -> None:
+        await self.body.update("")
 
 
 @click.command()
@@ -63,7 +66,7 @@ class UnifiHome(App):
     envvar="UNIFI_REFRESH",
     help="Refresh rate in seconds [Default: 30 seconds]",
 )
-def main(h, u, p, r):
+def main(h, u, p, s, r):
     credentials = {"host": h, "username": u, "password": p}
     print("Unifi Home is starting")
     UnifiHome.run(
