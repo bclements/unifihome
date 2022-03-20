@@ -1,8 +1,7 @@
+from rich.panel import Panel
 from textual._context import active_app
 from textual.reactive import Reactive
 from textual.widget import Widget
-from rich.console import Console, Renderable
-from rich.panel import Panel
 
 
 class Main(Widget):
@@ -18,6 +17,8 @@ class Main(Widget):
     def get_sys_info(self) -> None:
         c = active_app.get().unifi_controller
         systeminfo = c.get_sysinfo()
+        from rich.console import Console
+
         console = Console()
         with console.capture() as capture:
             for i in systeminfo[0]:

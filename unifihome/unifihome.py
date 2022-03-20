@@ -50,13 +50,20 @@ class UnifiHome(App):
 @click.option("-u", required=True, envvar="UNIFI_USERNAME")
 @click.option("-p", required=True, envvar="UNIFI_PASSWORD")
 @click.option(
+    "-s",
+    default="default",
+    required=False,
+    envvar="UNIFI_SITE",
+    help="Unifi Site name [Default: default]",
+)
+@click.option(
     "-r",
     default=30,
     required=False,
     envvar="UNIFI_REFRESH",
     help="Refresh rate in seconds [Default: 30 seconds]",
 )
-def unifi_home_start(h, u, p, r):
+def main(h, u, p, r):
     credentials = {"host": h, "username": u, "password": p}
     print("Unifi Home is starting")
     UnifiHome.run(
@@ -68,4 +75,4 @@ def unifi_home_start(h, u, p, r):
 
 
 if __name__ == "__main__":
-    unifi_home_start()
+    main()
