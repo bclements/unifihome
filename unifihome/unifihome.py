@@ -27,6 +27,7 @@ class UnifiHome(App):
         super().__init__(*args, **kwargs)
 
     async def on_load(self, event: events.Load) -> None:
+        await self.bind("d", "show_dashboard", "Dashboard")
         await self.bind("i", "get_system_info", "Unifi System Info")
         await self.bind("c", "clear", "Clear Screen")
         await self.bind("q", "quit", "Quit")
