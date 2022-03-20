@@ -7,3 +7,4 @@
 6. Fix Network info renderer content in unifi widgets to print each ip_addrs
 7. Interface Layout design
 8. Refactor everything as classes and models
+9. Integrate codecov and codeql as well as github actions to do stuff
