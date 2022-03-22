@@ -33,7 +33,7 @@ class UnifiHome(App):
         await self.bind("q", "quit", "Quit")
         await self.bind("h", "display_help", "Help")
 
-    async def on_mount(self, event: events.Mount) -> None:
+    async def on_mount(self, event: events.Mount) -> None:        
         self.header = Title()
         self.body = ScrollView()
         self.footer = Footer()
