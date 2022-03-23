@@ -7,7 +7,7 @@ from textual.widgets import ScrollView
 import constants
 from ui.footer import Footer
 from ui.title import Title
-from ui.unifi import UnifiSystemInfo
+from ui.widgets import UnifiSystemInfo
 
 """
 Unifi Home Text Console Application
@@ -33,7 +33,7 @@ class UnifiHome(App):
         await self.bind("q", "quit", "Quit")
         await self.bind("h", "display_help", "Help")
 
-    async def on_mount(self, event: events.Mount) -> None:        
+    async def on_mount(self, event: events.Mount) -> None:
         self.header = Title()
         self.body = ScrollView()
         self.footer = Footer()
