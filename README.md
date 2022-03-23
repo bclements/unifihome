@@ -14,6 +14,7 @@ Today it monitors your Unifi devices and provides a simple console based applica
 ## Requirements
  - Python 3.8 or later
  - UDM or UBNT Network Controller version 5.X or later
+ - unifipy-api-client (https://github.com/bclements/unifipy-api-client)
 
 ## Installation
 Download the latest release from Github: 
