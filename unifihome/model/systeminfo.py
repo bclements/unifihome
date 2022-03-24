@@ -1,24 +1,13 @@
-import datetime
 from dataclasses import dataclass
-
-from rich.console import Group, RenderableType
-from rich.padding import Padding
-from rich.panel import Panel
-from rich.table import Table
-from textual._context import active_app
-from textual.widget import Widget
-import logging
-from pprint import pformat
-
-logging.basicConfig(filename="unifihome.log", filemode="a", level=logging.DEBUG)
-
-"""
-Dataclasses to use in widgets # Refactor this to be in it's own model class file
-"""
+import datetime
 
 
 @dataclass
 class SystemInfo:
+    """
+    This class is used to store the system information of the controller.
+    """
+
     autobackup: str
     build: str
     console_display_version: str
@@ -40,8 +29,6 @@ class SystemInfo:
     https_port: str
     image_maps_use_google_engine: bool
     inform_port: str
-    ip_addrs: list
-    is_cloud_console: bool
     live_chat: str
     name: str
     override_inform_host: bool
@@ -61,8 +48,21 @@ class SystemInfo:
     uptime: int
     version: str
 
+    def __post_init__(self):
+        for (name, field_type) in self.__annotations__items():
+            if not isinstance(self.__dict__[name], field_type):
+                given_type = type(self.__dict__[name])
+                raise TypeError(
+                    f"The field `{name}` must be `{field_type}` (found `{given_type}`)."
+                )
+
     @classmethod
     def from_api(cls, payload):
+        """
+        Creates a SystemInfo object from the API payload.
+        :param payload: The API payload.
+        :return: A SystemInfo object.
+        """
         autobackup = payload[0]["autobackup"]
         build = payload[0]["build"]
         console_display_version = payload[0]["console_display_version"]
@@ -159,74 +159,4 @@ class SystemInfo:
             update_downloaded=update_downloaded,
             uptime=uptime,
             version=version,
-        )
-
-
-class UnifiSystemInfo(Widget):
-    def render(self) -> RenderableType:
-        si = SystemInfo.from_api(active_app.get().unifi_controller.get_sysinfo())
-        self.table = Table(expand=True, show_header=False, padding=0, box=None)
-        self.table.add_column("1", no_wrap=True, ratio=1)
-        self.table.add_column("2", no_wrap=True)
-        self.table.add_column("3", no_wrap=True)
-        self.table.add_row(
-            self.render_buildinfo(si),
-            Group(self.render_miscinfo(si), self.render_retentioninfo(si)),
-            "",
-        )
-        self.table.add_row(
-            self.render_networkinfo(si),
-            "" "",
-        )
-        self.group = Group(self.table, "")
-        return Padding(
-            Panel(self.group, title="Unifi System Information"), (1, 0, 0, 0)
-        )
-
-    def render_networkinfo(self, si):
-        content = f"[b]Hostname[/b]: {si.hostname}\n" f"[b]IP Address(es)[/b]:\n"
-        for ip in si.ip_addrs:
-            content = content + f"\t{ip}\n"
-        content_1 = (
-            f"\n[b]HTTP Port[/b]: {si.https_port}\n"
-            f"[b]Inform Port:[/b] {si.inform_port}"
-        )
-        content = content + content_1
-        return Panel(
-            content,
-            title="Network Information",
-            title_align="left",
-            border_style="blue",
-        )
-
-    def render_buildinfo(self, si):
-        content = (
-            f"[b]System Name[/b]: {si.name}\n"
-            f"[b]Version[/b]: {si.version}\n"
-            f"[b]Build[/b]: {si.build}\n"
-            f"[b]UDM Version[/b]: {si.udm_version}\n"
-            f"[b]Update Available?[/b] {si.update_available}\n"
-            f"[b]Device:[/b] {si.ubnt_device_type}"
-        )
-        return Panel(
-            content,
-            title="Buid Information",
-            title_align="left",
-            border_style="bold blue",
-        )
-
-    def render_retentioninfo(self, si):
-        content = (
-            f"[b]Configured Days of Retention:[/b] {si.data_retention_days}\n"
-            f"[b]Currently storing {len(active_app.get().unifi_controller.get_backups())} backups"
-        )
-        return Panel(
-            content, title="Retention Details", title_align="left", border_style="blue"
-        )
-
-    def render_miscinfo(self, si):
-        content = f"[b]Timezone:[/b] {si.timezone}\n"
-        content = content + f"[b]Uptime:[/b] {si.uptime}"
-        return Panel(
-            content, title="Misc. Information", title_align="left", border_style="blue"
         )

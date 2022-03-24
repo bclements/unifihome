@@ -5,9 +5,10 @@ from textual.app import App
 from textual.widgets import ScrollView
 
 import constants
-from ui.footer import Footer
-from ui.title import Title
-from ui.widgets import UnifiSystemInfo
+import ui.footer
+import ui.title 
+from ui.systeminfo.page import PageWidget
+
 
 """
 Unifi Home Text Console Application
@@ -15,6 +16,10 @@ Unifi Home Text Console Application
 
 
 class UnifiHome(App):
+    """
+    This is the main class of the Unifi Home Console app.
+    """
+
     def __init__(self, *args, credentials, refresh_rate, **kwargs):
         self.credentials = credentials
         self.refresh_rate = refresh_rate
@@ -34,15 +39,15 @@ class UnifiHome(App):
         await self.bind("h", "display_help", "Help")
 
     async def on_mount(self, event: events.Mount) -> None:
-        self.header = Title()
+        self.header = ui.title.Title()
         self.body = ScrollView()
-        self.footer = Footer()
+        self.footer = ui.footer.Footer()
         await self.view.dock(self.header, edge="top")
         await self.view.dock(self.footer, edge="bottom")
         await self.view.dock(self.body, name="main")
 
     async def action_get_system_info(self) -> None:
-        self.unifisysteminfoarea = UnifiSystemInfo()
+        self.unifisysteminfoarea = ui.systeminfo.PageWidget()
         await self.body.update(self.unifisysteminfoarea)
 
     async def action_clear(self) -> None:
