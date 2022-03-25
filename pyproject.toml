@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "unifihome"
-version = "0.1.0"
-description = "UNIFI Network Console application for Monitoring and More"
+version = "0.1.1"
+description = "Console based application for monitoring and management of at home UNIFI devices"
 authors = ["Brent Clements <brent.clements@gmail.com>"]
 license = "MIT"
 
