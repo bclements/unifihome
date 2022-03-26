@@ -7,9 +7,13 @@ packages = \
 package_data = \
 {'': ['*']}
 
+entry_points = \
+{'console_scripts': ['unifihome = unifihome.cli:main']}
+
 setup_kwargs = {
     'name': 'unifihome',
     'version': '0.1.1',
+    'license': 'MIT',
     'description': 'Console based application for monitoring and management of at home UNIFI devices',
     'long_description': None,
     'author': 'Brent Clements',
