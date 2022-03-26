@@ -5,9 +5,9 @@ from textual.app import App
 from textual.widgets import ScrollView
 
 import constants
-import ui.footer
-import ui.title 
-from ui.systeminfo.page import PageWidget
+from unifihome.ui.footer import Footer
+from unifihome.ui.title import Title
+from unifihome.ui.systeminfo.page import PageWidget
 
 
 """
@@ -39,15 +39,15 @@ class UnifiHome(App):
         await self.bind("h", "display_help", "Help")
 
     async def on_mount(self, event: events.Mount) -> None:
-        self.header = ui.title.Title()
+        self.header = Title()
         self.body = ScrollView()
-        self.footer = ui.footer.Footer()
+        self.footer = Footer()
         await self.view.dock(self.header, edge="top")
         await self.view.dock(self.footer, edge="bottom")
         await self.view.dock(self.body, name="main")
 
     async def action_get_system_info(self) -> None:
-        self.unifisysteminfoarea = ui.systeminfo.PageWidget()
+        self.unifisysteminfoarea = PageWidget()
         await self.body.update(self.unifisysteminfoarea)
 
     async def action_clear(self) -> None:
