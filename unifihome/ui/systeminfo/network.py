@@ -4,7 +4,7 @@ from textual.widget import Widget
 
 
 class NetworkInfoWidget(Widget):
-    def __init__(self, *args, data, refresh_rate, **kwargs) -> None:
+    def __init__(self, *args, data, **kwargs) -> None:
         self.data = data
         super().__init__(*args, **kwargs)
 

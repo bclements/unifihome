@@ -49,13 +49,13 @@ class SystemInfo:
     uptime: int
     version: str
 
-    def __post_init__(self):        
-        for (name, field_type) in self.__annotations__items():
-            if not isinstance(self.__dict__[name], field_type):
-                given_type = type(self.__dict__[name])
-                raise TypeError(
-                    f"The field `{name}` must be `{field_type}` (found `{given_type}`)."
-                )
+#    def __post_init__(self) -> None:        
+#        for (name, field_type) in self.__annotations__.items():
+#            if not isinstance(self.__dict__[name], field_type):
+#                given_type = type(self.__dict__[name])
+#                raise TypeError(
+#                    f"The field `{name}` must be `{field_type}` (found `{given_type}`)."
+#                )
 
 
     @classmethod

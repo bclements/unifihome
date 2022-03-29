@@ -20,9 +20,8 @@ class UnifiHome(App):
     This is the main class of the Unifi Home Console app.
     """
 
-    def __init__(self, *args, credentials, refresh_rate, **kwargs):
+    def __init__(self, *args, credentials, **kwargs) -> None:
         self.credentials = credentials
-        self.refresh_rate = refresh_rate
         self.unifi_controller = Controller(
             self.credentials["host"],
             self.credentials["username"],
@@ -74,14 +73,13 @@ class UnifiHome(App):
     envvar="UNIFI_REFRESH",
     help="Refresh rate in seconds [Default: 30 seconds]",
 )
-def main(h, u, p, s, r):
+def main(h, u, p, s, r) -> None:
     credentials = {"host": h, "username": u, "password": p}
     print("Unifi Home is starting")
     UnifiHome.run(
         title=f"Unifi Home v{constants.VERSION}-b{constants.BUILD}",
         log="textual.log",
         credentials=credentials,
-        refresh_rate=r,
     )
 
 

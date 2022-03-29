@@ -9,7 +9,7 @@ class MiscInfoWidget(Widget):
     :return: A panel containing the miscellaneous information.
     """
 
-    def __init__(self, *args, data, refresh_rate, **kwargs) -> None:
+    def __init__(self, *args, data, **kwargs) -> None:
         self.data = data
         super().__init__(*args, **kwargs)
 
