@@ -7,7 +7,6 @@ class SystemInfo:
     """
     This class is used to store the system information of the controller.
     """
-
     autobackup: str
     build: str
     console_display_version: str
@@ -29,6 +28,8 @@ class SystemInfo:
     https_port: str
     image_maps_use_google_engine: bool
     inform_port: str
+    ip_addrs: list
+    is_cloud_console: bool
     live_chat: str
     name: str
     override_inform_host: bool
@@ -48,13 +49,14 @@ class SystemInfo:
     uptime: int
     version: str
 
-    def __post_init__(self):
+    def __post_init__(self):        
         for (name, field_type) in self.__annotations__items():
             if not isinstance(self.__dict__[name], field_type):
                 given_type = type(self.__dict__[name])
                 raise TypeError(
                     f"The field `{name}` must be `{field_type}` (found `{given_type}`)."
                 )
+
 
     @classmethod
     def from_api(cls, payload):
@@ -67,29 +69,17 @@ class SystemInfo:
         build = payload[0]["build"]
         console_display_version = payload[0]["console_display_version"]
         data_retention_days = payload[0]["data_retention_days"]
-        data_retention_time_in_hours_for_5minutes_scale = payload[0][
-            "data_retention_time_in_hours_for_5minutes_scale"
-        ]
-        data_retention_time_in_hours_for_daily_scale = payload[0][
-            "data_retention_time_in_hours_for_daily_scale"
-        ]
-        data_retention_time_in_hours_for_hourly_scale = payload[0][
-            "data_retention_time_in_hours_for_hourly_scale"
-        ]
-        data_retention_time_in_hours_for_monthly_scale = payload[0][
-            "data_retention_time_in_hours_for_monthly_scale"
-        ]
-        data_retention_time_in_hours_for_others = payload[0][
-            "data_retention_time_in_hours_for_others"
-        ]
+        data_retention_time_in_hours_for_5minutes_scale = payload[0]["data_retention_time_in_hours_for_5minutes_scale"]
+        data_retention_time_in_hours_for_daily_scale = payload[0]["data_retention_time_in_hours_for_daily_scale"]
+        data_retention_time_in_hours_for_hourly_scale = payload[0]["data_retention_time_in_hours_for_hourly_scale"]
+        data_retention_time_in_hours_for_monthly_scale = payload[0]["data_retention_time_in_hours_for_monthly_scale"]
+        data_retention_time_in_hours_for_others = payload[0]["data_retention_time_in_hours_for_others"]
         debug_device = payload[0]["debug_device"]
         debug_mgmt = payload[0]["debug_mgmt"]
         debug_sdn = payload[0]["debug_sdn"]
         debug_setting_preference = payload[0]["debug_setting_preference"]
         debug_system = payload[0]["debug_system"]
-        default_site_device_auth_password_alert = payload[0][
-            "default_site_device_auth_password_alert"
-        ]
+        default_site_device_auth_password_alert = payload[0]["default_site_device_auth_password_alert"]
         facebook_wifi_registered = payload[0]["facebook_wifi_registered"]
         has_webrtc_support = payload[0]["has_webrtc_support"]
         hostname = payload[0]["hostname"]

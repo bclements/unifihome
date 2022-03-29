@@ -5,11 +5,11 @@ from rich.table import Table
 from textual._context import active_app
 from textual.widget import Widget
 
-from unifihome.model.systeminfo import SystemInfo
-from unifihome.systeminfo.backup import BackupInfoWidget
-from unifihome.systeminfo.build import BuildInfoWidget
-from unifihome.systeminfo.misc import MiscInfoWidget
-from unifihome.systeminfo.network import NetworkInfoWidget
+from model.systeminfo import SystemInfo
+from .backup import BackupInfoWidget
+from .build import BuildInfoWidget
+from .misc import MiscInfoWidget
+from .network import NetworkInfoWidget
 
 
 class PageWidget(Widget):

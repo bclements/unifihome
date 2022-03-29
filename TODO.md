@@ -8,3 +8,4 @@
 7. Interface Layout design
 8. Refactor everything as classes and models
 9. Integrate codecov and codeql as well as github actions to do stuff
+10. Add Click Config file functionality

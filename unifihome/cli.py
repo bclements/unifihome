@@ -1,13 +1,13 @@
 import click
-from pyunifi.controller import Controller
+from unifipy_api_client.controller import Controller
 from textual import events
 from textual.app import App
 from textual.widgets import ScrollView
 
 import constants
-from unifihome.ui.footer import Footer
-from unifihome.ui.title import Title
-from unifihome.ui.systeminfo.page import PageWidget
+from ui.footer import Footer
+from ui.title import Title
+from ui.systeminfo.page import PageWidget
 
 
 """
@@ -27,6 +27,8 @@ class UnifiHome(App):
             self.credentials["host"],
             self.credentials["username"],
             self.credentials["password"],
+            ssl_verify=False,
+            version="UDMP-unifiOS",
         )
         self.pending_event = None
         super().__init__(*args, **kwargs)
